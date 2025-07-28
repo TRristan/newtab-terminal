@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>user@home > newtab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+  <style>
+    html {
+      background-color: #1e1e2e;
+      color: #cdd6f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font: 22px/1 "Inconsolata", monospace;
+    }
+
+    body {
+      background-color: #181825;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #0005;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      min-width: 60vw;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      font-weight: bold;
+      color: #b4befe;
+    }
+
+    nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 2em;
+      margin: 1em 0;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li:first-child {
+      font-weight: bold;
+      margin-bottom: 0.3em;
+    }
+
+    ul:nth-child(5n+1) li:first-child { color: #f38ba8; }  /* pink */
+    ul:nth-child(5n+2) li:first-child { color: #fab387; }  /* peach */
+    ul:nth-child(5n+3) li:first-child { color: #f9e2af; }  /* yellow */
+    ul:nth-child(5n+4) li:first-child { color: #a6e3a1; }  /* green */
+    ul:nth-child(5n+5) li:first-child { color: #89dceb; }  /* teal */
+
+    #search-line {
+      display: flex;
+      align-items: center;
+      margin-top: 1em;
+    }
+
+    #prompt {
+      color: #89b4fa;
+    }
+
+    #search {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #search-form {
+      display: flex;
+      align-items: center;
+      position: relative;
+      flex-grow: 1;
+    }
+
+    #display-text {
+      color: #cdd6f4;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    #cursor {
+      background-color: #a6e3a1;
+      width: 0.6ch;
+      height: 1em;
+      display: inline-block;
+      animation: blink 1s steps(2, start) infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <p><span>user@home &gt; </span>newtab</p>
+
+  <nav>
+    <ul>
+      <li>general</li>
+      <li><a href="https://stpg.tk/">/wg/-/stpg/</a></li>
+      <li><a href="https://www.theonion.com/">news</a></li>
+      <li><a href="https://send.firefox.com/">ff send</a></li>
+    </ul>
+    <ul>
+      <li>education</li>
+      <li><a href="https://developer.mozilla.org/">mdn</a></li>
+      <li><a href="https://stackoverflow.com/">stack overflow</a></li>
+    </ul>
+    <ul>
+      <li>home</li>
+      <li><a href="https://rent.example.com/">rent portal</a></li>
+      <li><a href="https://shopping.example.com/">shopping list</a></li>
+      <li><a href="https://goals.example.com/">goals</a></li>
+    </ul>
+    <ul>
+      <li>misc.</li>
+      <li><a href="https://music.example.com/">moosic</a></li>
+      <li><a href="https://deluge.example.com/">deluge web</a></li>
+    </ul>
+  </nav>
+
+  <div id="search-line">
+    <span id="prompt">user@home &gt; </span>
+    <form id="search-form">
+      <input type="text" id="search" autocomplete="off" autofocus />
+      <span id="display-text"></span><span id="cursor"></span>
+    </form>
+  </div>
+
+  <script>
+    const input = document.getElementById("search");
+    const display = document.getElementById("display-text");
+    const form = document.getElementById("search-form");
+
+    input.addEventListener("input", () => {
+      display.textContent = input.value;
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const query = input.value.trim();
+      if (query !== "") {
+        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+      }
+    });
+
+    // Para enfocar input al hacer clic en la pantalla
+    document.body.addEventListener("click", () => input.focus());
+  </script>
+</body>
+</html>
